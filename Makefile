@@ -8,5 +8,5 @@ front/node_modules: front/package.json
 	@ touch $@
 
 install:
-	mkdir -p $(INSTALL_LUADIR)/cartridge-app/
-	cp front/build/bundle.lua $(INSTALL_LUADIR)/cartridge-app/bundle.lua
+	mkdir -p $(INSTALL_LUADIR)/easy-function/
+	cp front/build/bundle.lua $(INSTALL_LUADIR)/easy-function/bundle.lua

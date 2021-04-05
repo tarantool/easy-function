@@ -1,0 +1,27 @@
+R:
+  instances:
+  - router
+  roles:
+  - failover-coordinator
+  - vshard-router
+  - extensions
+  - crud-router
+
+S1:
+  instances:
+  - s1
+  roles:
+  - vshard-storage
+  - extensions
+  - crud-storage
+  weight: 1
+
+S2:
+  instances:
+  - s2
+  roles:
+  - vshard-storage
+  - extensions
+  - crud-storage
+  weight: 1
+

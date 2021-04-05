@@ -1,5 +1,5 @@
 easy-function:
-  cluster_cookie: ""
+  cluster_cookie: "easy"
   memtx_memory: 33554432 # 32 MiB
   vinyl_memory: 0
 

@@ -1,8 +1,9 @@
 local t = require('luatest')
-local g = t.group('unit_sample')
+local h = require('test.helper')
+local g = t.group()
 
-require('test.helper.unit')
+local log = require('log')
 
-g.test_sample = function()
-    t.assert_equals(type(box.cfg), 'table')
+function g.test_sample()
+    log.info(h.project_root)
 end

@@ -3,10 +3,10 @@
 require('strict').on()
 package.setsearchroot()
 
-local front = require('frontend-core')
+-- local front = require('frontend-core')
 local cartridge = require('cartridge')
-local analytics = require('analytics')
-local tutorial = require('easy-function.bundle')
+-- local analytics = require('analytics')
+-- local tutorial = require('easy-function.bundle')
 
 require('cartridge.roles.vshard-router').hidden = true
 require('cartridge.roles.vshard-storage').hidden = true
@@ -27,9 +27,9 @@ local ok, err = cartridge.cfg({
 })
 assert(ok, tostring(err))
 
-front.add('analytics_static', analytics.static_bundle)
-front.add('ga', analytics.use_bundle({ ga = '71738660-1' }))
-front.add('tutorial', tutorial)
+-- front.add('analytics_static', analytics.static_bundle)
+-- front.add('ga', analytics.use_bundle({ ga = '71738660-1' }))
+-- front.add('tutorial', tutorial)
 
 package.loaded.migrator.set_loader(
     require('migrator.config-loader').new()

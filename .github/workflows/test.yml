@@ -1,0 +1,51 @@
+name: Test
+
+on:
+  push:
+
+jobs:
+  test:
+    env:
+      tarantool: '2.7'
+      cartridge-cli: '2.9.1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Setup tarantool
+      - uses: tarantool/setup-tarantool@v1
+        with:
+          tarantool-version: ${{ env.tarantool }}
+
+      # Setup cartridge-cli
+      - uses: ./.github/actions/setup-cartridge-cli
+        with:
+          cli-version: '2.9.1'
+          install-prefix: ${{ runner.temp }}/cartridge-cli
+
+      ##################################################################
+      # Setup luacheck and luatest
+      - name: Cache rocks
+        uses: actions/cache@v2
+        id: cache-test-rocks
+        with:
+          path: .rocks/
+          key: cache-test-rocks-${{ hashFiles('easy-function-scm-1.rockspec') }}
+          restore-keys: cache-test-rocks
+      -
+        run: tarantoolctl rocks install luacheck
+        if: steps.cache-test-rocks.outputs.cache-hit != 'true'
+      -
+        run: tarantoolctl rocks install luatest 0.5.2
+        if: steps.cache-test-rocks.outputs.cache-hit != 'true'
+
+      ##################################################################
+      # Run lua tests
+      - run: .rocks/bin/luacheck .
+      # Build module
+      - run: cartridge build --verbose
+      - run: .rocks/bin/luatest -v
+
+      ##################################################################
+      # Cleanup cached paths
+      - run: tarantoolctl rocks remove easy-function

@@ -1,0 +1,31 @@
+name: 'Setup Cartridge CLI'
+description: 'Download and extract cartridge-cli release archive'
+inputs:
+  cli-version:
+    description: 'Release name from https://github.com/tarantool/cartridge-cli/releases'
+    required: true
+  install-prefix:
+    description: 'Where to extract the archive'
+    default: './cartridge-cli'
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      env:
+        BASE_URL: "https://github.com/tarantool/cartridge-cli/releases/download"
+        CLI_VERSION: ${{ inputs.cli-version }}
+        INSTALL_PREFIX: ${{ inputs.install-prefix }}
+      run: >
+        set -x;
+        mkdir -p ${INSTALL_PREFIX};
+        echo ${INSTALL_PREFIX} >> $GITHUB_PATH
+
+        curl -L ${BASE_URL}/${CLI_VERSION}/cartridge-cli-${CLI_VERSION}.Linux.amd64.tar.gz
+        | tar xz -C ${INSTALL_PREFIX} cartridge
+
+    - shell: bash
+      run: |
+        set -x
+        which cartridge
+        cartridge --version
+

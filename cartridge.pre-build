@@ -1,3 +1,10 @@
 #!/bin/sh
 
-tarantoolctl rocks make --chdir ./analytics
+# tarantoolctl rocks make --chdir ./analytics
+if ! tarantoolctl rocks list --porcelain | grep cartridge | grep 2.6.0-1; then
+    tarantoolctl rocks install cartridge 2.6.0-1
+    tarantoolctl rocks remove ddl --force
+fi
+
+tarantoolctl rocks install ./deps/extensions-easy-1.rockspec
+tarantoolctl rocks install ./deps/ddl-easy-1.rockspec

@@ -1,8 +1,8 @@
 package = 'extensions'
 version = 'easy-1'
 
-local git_ref = '1.0.0-1-g4d53057'
-local git_hash = '4d5305790011ba96f99f23412e035b7d9b9ade6f'
+local git_ref = '1.0.0-2-g8083397'
+local git_hash = '8083397ae02d026dcd085ceac606d112621ef4c5'
 source  = {
     url = 'https://github.com/tarantool/cartridge-extensions/archive/'
         .. git_ref .. '.zip',

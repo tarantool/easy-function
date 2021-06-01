@@ -1,0 +1,37 @@
+name: Pack
+
+on:
+  push:
+    branches: [master]
+    tags: ['*']
+
+jobs:
+  test:
+    env:
+      tarantool: '2.7'
+      cartridge-cli: '2.9.1'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git fetch --prune --unshallow --tags
+
+      # Setup tarantool
+      - uses: tarantool/setup-tarantool@v1
+        with:
+          tarantool-version: ${{ env.tarantool }}
+
+      # Setup cartridge-cli
+      - uses: ./.github/actions/setup-cartridge-cli
+        with:
+          cli-version: '2.9.1'
+          install-prefix: ${{ runner.temp }}/cartridge-cli
+
+      ##################################################################
+      # Pack the app
+      - run: cartridge pack deb --use-docker --verbose
+
+      - name: Upload easy-function.deb artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: easy-function
+          path: easy-function-*.deb

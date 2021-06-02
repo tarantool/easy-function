@@ -10,6 +10,8 @@ local cartridge = require('cartridge')
 
 require('cartridge.roles.vshard-router').hidden = true
 require('cartridge.roles.vshard-storage').hidden = true
+require('cartridge.roles.crud-router').implies_router = true
+require('cartridge.roles.crud-storage').implies_storage = true
 require('extensions').permanent = true
 
 local ok, err = cartridge.cfg({
